@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tools:
+    name: Toolchain smoke tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install deps
+        run: pip install pillow numpy scipy
+      - name: Compile-check all tools
+        run: python -m compileall -q tools/
+      - name: Run smoke tests
+        run: python tools/smoke_test.py
+
+  docs:
+    name: Repo hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: No game assets committed
+        run: |
+          if git ls-files | grep -iE '\.(iso|gcm|rvz|wbfs|dsp|wav|samp|sdir|msm|pdt)$'; then
+            echo "::error::game asset files must never be committed"
+            exit 1
+          fi
+          if git ls-files | grep -qE '^(extracted|sound_out)/'; then
+            echo "::error::extracted asset directories must never be committed"
+            exit 1
+          fi
+          echo "clean: no copyrighted game data in repo"
+      - name: JSON validity
+        run: |
+          pip install check-jsonschema 2>/dev/null || true
+          python - <<'EOF'
+          import json, glob, sys
+          # validate any committed json parses
+          bad = []
+          for f in glob.glob('**/*.json', recursive=True):
+              try:
+                  json.load(open(f))
+              except Exception as e:
+                  bad.append((f, e))
+          for f, e in bad:
+              print(f"INVALID {f}: {e}")
+          sys.exit(1 if bad else 0)
+          EOF

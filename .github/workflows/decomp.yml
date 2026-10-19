@@ -1,0 +1,37 @@
+name: Decomp build
+
+# Manual-only: the matching build needs the original game disc image, which
+# cannot be committed or distributed. Run this workflow from the Actions tab
+# after uploading your own dump as a workflow artifact/secret, or just run
+# locally:  cd decomp && python configure.py && python -m ninja
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build + verify byte-match (requires ISO)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check for game image
+        run: |
+          if (-not (Test-Path "decomp/orig/GWZJ01/game.iso")) {
+            Write-Host "::error::decomp/orig/GWZJ01/game.iso not present."
+            Write-Host "The original ISO cannot be distributed with the repo."
+            Write-Host "Run the build locally instead - see README/docs."
+            exit 1
+          }
+      - name: Install ninja
+        run: pip install ninja
+      - name: Configure
+        working-directory: decomp
+        run: python configure.py
+      - name: Build
+        working-directory: decomp
+        run: python -m ninja
+      - name: Verify ddrmotchkDll.rel matches
+        working-directory: decomp
+        run: python -m ninja check 2>$null; if ($LASTEXITCODE -ne 0) { exit 1 }
