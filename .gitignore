@@ -1,0 +1,28 @@
+# Never commit game assets or dumps
+*.iso
+*.gcm
+*.rvz
+decomp/orig/
+extracted/
+sound_out/
+assets/
+!assets/logo/
+assets/logo/*.png
+!assets/logo/banner.png
+!assets/logo/icon.png
+ghidra-project/*.rep/
+ghidra-project/*.gpr
+ghidra-project/*.lock*
+
+# Build output
+decomp/build/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Local tools/artifacts not for the repo
+ghidra-project/
+tools/objdiff.exe
+tools/sweep_tmp.o
+decomp_out_chart.txt
+mp4tree.json

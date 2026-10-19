@@ -1,0 +1,45 @@
+Sections:
+	.text       type:code align:4
+	.ctors      type:rodata align:4
+	.dtors      type:rodata align:4
+	.rodata     type:rodata align:8
+	.data       type:data align:8
+	.bss        type:bss align:8
+
+motchk/data.c:
+	.rodata     start:0x00000000 end:0x0000016E
+	.data       start:0x00000000 end:0x000008DC
+	.bss        start:0x00000000 end:0x0000024C
+
+REL/executor.c:
+	.text       start:0x00000000 end:0x000000A0
+
+motchk/init.c:
+	.text       start:0x000000A0 end:0x000001A0
+
+motchk/asm_01A0.c:
+	.text       start:0x000001A0 end:0x00000798
+
+motchk/motchk.c:
+	.text       start:0x00000798 end:0x00000868
+
+motchk/asm_0868.c:
+	.text       start:0x00000868 end:0x00000CA4
+
+motchk/vec.c:
+	.text       start:0x00000CA4 end:0x00000D24
+
+motchk/asm_0D24.c:
+	.text       start:0x00000D24 end:0x00002BA8
+
+motchk/asm_2BA8.c:
+	.text       start:0x00002BA8 end:0x00002C64
+
+motchk/proc.c:
+	.text       start:0x00002C64 end:0x00002CC8
+
+motchk/asm_2CC8.c:
+	.text       start:0x00002CC8 end:0x00003060
+
+motchk/cleanup.c:
+	.text       start:0x00003060 end:0x000030B0
