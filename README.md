@@ -7,10 +7,10 @@
 This is a fan project rebuilding the 2005 GameCube cult classic *DDR Mario Mix*
 as a native PC game — and then going beyond it:
 
-- 🎵 **Custom songs** — dance to tracks from other Nintendo games (and more)
-- 🌍 **New worlds and game modes**
-- 🍄 **More playable characters** from the Mario universe
-- 🕹️ **Play with keyboard or a USB dance pad**
+-  **Custom songs** — dance to tracks from other Nintendo games (and more)
+-  **New worlds and game modes**
+-  **More playable characters** from the Mario universe
+-  **Play with keyboard or a USB dance pad**
 
 ## Status: early development 🚧
 
